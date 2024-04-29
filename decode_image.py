@@ -7,6 +7,10 @@ def decode_image(input_file, output_file):
     # Remove data URL prefix if present
     if ',' in base64_data:
         base64_data = base64_data.split(',')[1]
+    # Add padding if necessary
+    padding = len(base64_data) % 4
+    if padding > 0:
+        base64_data += '=' * (4 - padding)
     image_data = base64.decodebytes(base64_data.encode('utf-8'))
     with open(output_file, 'wb') as file:
         file.write(image_data)
