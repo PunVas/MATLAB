@@ -19,7 +19,7 @@ if __name__ == "__main__":
     import yaml
 
     # Load YAML configuration
-    with open('config.yml', 'r') as stream:
+    with open('.github/workflows/decode_image.yml', 'r') as stream:
         config = yaml.safe_load(stream)
 
     # Ensure decoded images directory exists
