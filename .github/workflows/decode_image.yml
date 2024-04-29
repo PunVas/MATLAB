@@ -1,4 +1,4 @@
-name: Decode Base64 Images
+name: Decode bin Images
 
 on:
   push:
@@ -14,12 +14,10 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.x'
-    - name: Decode Base64 Images
+    - name: Decode bin Images
       run: |
         mkdir -p decoded_images
-        for file in images/*.txt; do
-          python decode_image.py "$file" "decoded_images/$(basename "${file%.*}").png"
-        done
+        python decode_image.py
     - name: Commit and Push Decoded Images
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
