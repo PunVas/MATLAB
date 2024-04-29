@@ -1,0 +1,26 @@
+name: Decode Base64 Images
+
+on:
+  push:
+    paths:
+    - 'images/*.txt'  # Trigger only when .txt files in the images directory are pushed
+
+jobs:
+  decode:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    - name: Decode Base64 Images
+      run: |
+        mkdir -p decoded_images
+        for file in images/*.txt; do
+          python decode_image.py "$file" "decoded_images/$(basename "${file%.*}").png"
+        done
+    - name: Commit and Push Decoded Images
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: 'Add decoded images'
