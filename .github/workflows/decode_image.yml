@@ -17,7 +17,7 @@ jobs:
     - name: Decode Base64 Images
       run: |
         mkdir -p decoded_images
-        for file in images/*.txt; do
+        for file in /*.txt; do
           python decode_image.py "$file" "decoded_images/$(basename "${file%.*}").png"
         done
     - name: Commit and Push Decoded Images
