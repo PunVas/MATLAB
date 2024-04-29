@@ -3,7 +3,7 @@ name: Decode Base64 Images
 on:
   push:
     paths:
-    - 'images/*.txt'  # Trigger only when .txt files in the images directory are pushed
+    - '/*.txt'  # Trigger only when .txt files in the images directory are pushed
 
 jobs:
   decode:
