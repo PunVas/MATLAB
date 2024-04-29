@@ -1,0 +1,2 @@
+input_images_dir: 'images'
+decoded_images_dir: 'decoded_images'
