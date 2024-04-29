@@ -1,6 +1,6 @@
 import base64
 import sys
-from PIL import Image
+
 def decode_image(input_file, output_file):
     with open(input_file, 'r') as file:
         base64_data = file.read()
