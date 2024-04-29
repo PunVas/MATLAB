@@ -3,7 +3,7 @@ name: Decode Base64 Images
 on:
   push:
     paths:
-    - '/*.txt'  # Trigger only when .txt files in the images directory are pushed
+    - 'images/*.txt'  # Trigger only when .txt files in the images directory are pushed
 
 jobs:
   decode:
@@ -17,7 +17,7 @@ jobs:
     - name: Decode Base64 Images
       run: |
         mkdir -p decoded_images
-        for file in /*.txt; do
+        for file in images/*.txt; do
           python decode_image.py "$file" "decoded_images/$(basename "${file%.*}").png"
         done
     - name: Commit and Push Decoded Images
