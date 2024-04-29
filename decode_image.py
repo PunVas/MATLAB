@@ -1,22 +1,33 @@
+import os
 import base64
-import sys
+from PIL import Image
 
-def decode_image(input_file, output_file):
-    with open(input_file, 'r') as file:
-        base64_data = file.read()
-    base64_data=base64_data.base64_data.decode('utf-8')
-    # Remove data URL prefix if present
-    if ',' in base64_data:
-        base64_data = base64_data.split(',')[1]
-    image_data = base64.decodebytes(base64_data.encode('utf-8'))
-    with open(output_file, 'wb') as file:
-        file.write(image_data)
+def decode_and_save_image(input_file, output_file):
+    # Read binary data from the input file
+    with open(input_file, 'rb') as f:
+        binary_data = f.read()
+
+    # Convert binary data to image using PIL
+    image = Image.open(io.BytesIO(binary_data))
+
+    # Save the image as PNG
+    image.save(output_file, format="PNG")
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python decode_image.py input_file output_file")
-        sys.exit(1)
+    import sys
+    import io
+    import yaml
 
-    input_file = sys.argv[1]
-    output_file = sys.argv[2]
-    decode_image(input_file, output_file)
+    # Load YAML configuration
+    with open('config.yaml', 'r') as stream:
+        config = yaml.safe_load(stream)
+
+    # Ensure decoded images directory exists
+    os.makedirs(config['decoded_images_dir'], exist_ok=True)
+
+    # Iterate through each binary file in the specified directory
+    for filename in os.listdir(config['input_images_dir']):
+        if filename.endswith('.txt'):
+            input_file = os.path.join(config['input_images_dir'], filename)
+            output_file = os.path.join(config['decoded_images_dir'], f"{os.path.splitext(filename)[0]}.png")
+            decode_and_save_image(input_file, output_file)
