@@ -4,6 +4,7 @@ import sys
 def decode_image(input_file, output_file):
     with open(input_file, 'r') as file:
         base64_data = file.read()
+    base64_data=base64_data.base64_data.decode('utf-8')
     # Remove data URL prefix if present
     if ',' in base64_data:
         base64_data = base64_data.split(',')[1]
